@@ -21,7 +21,7 @@ const daysOfWeek: Selection[] = [
 
 const App: FC = () => {
     const [periodicity, setPeriodicity] = useState<Periodicity>('DAILY');
-    const [cronExpression, setCronExpression] = useState<string>('');
+    const [cronExpression, setcronExpression] = useState<string>('');
     const [cronHumanFriendly, setCronHumanFriendly] = useState<string>('');
     const [errorMessage, setErrorMessage] = useState<string>('');
 
@@ -85,12 +85,11 @@ const App: FC = () => {
                 } else if (yearlyOption === 'WEEKDAY') {
                     const monthlyWeekday = monthlyWeekdayChoice === 'FIRST' ? '1' : 'L';
                     cron = `${minute} ${hour} ${monthlyWeekday}W ${yearlyWeekdayMonth} *`;
-                    console.log(cron)
                 }
             }
 
-            const parsed: string = C2Q.getQuartz(cron);
-            setCronExpression(parsed);
+            C2Q.getQuartz(cron);
+            setcronExpression(cron);
             setCronHumanFriendly(cronstrue.toString(cron, { verbose: true }));
         } catch (error) {
             setErrorMessage('Invalid CRON expression: ' + (error as string));
